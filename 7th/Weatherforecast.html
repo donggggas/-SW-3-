@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>api 구현</title>
+</head>
+
+<body>
+    <h1>날씨 앱</h1>
+    <input id="city" value="" type="text">
+    <button id="search">검색</button>
+
+    <p></p>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $("#search").click(function () {
+                $.ajax({
+                    method: "GET",
+                     url: "http://api.openweathermap.org/data/2.5/forecast/daily?id=1835847&mode=json&units=metric&cnt=7&appid=5fd2f2cde90c1533efb95b19c048a528",
+                     data: { query: $("city").val() }
+                })
+                    .done(function (msg) {
+                        console.log(msg);
+                        console.log(msg.list[0].weather[0].main);
+                        console.log(msg.city.id);
+                        $( "p" ).append( "<strong>"+msg.list[0].weather[0].main+"</strong>" );
+                        $( "p" ).append( "<strong>"+msg.city.name+"</strong>" );
+            
+                           })
+                     })      
+    });
+
+    </script>
+</body>
+
+</html>
